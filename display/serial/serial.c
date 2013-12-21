@@ -5,7 +5,7 @@
 #define SERIAL_BUFFER_FULL (1 << 5)
 
 
-void serial_putc(char c, uint32_t x, uint32_t y)
+void serial_putc(char c)
 {
     /* Wait until the serial buffer is empty */
     while (*(volatile unsigned long*)(SERIAL_BASE + SERIAL_FLAG_REGISTER) 
@@ -14,6 +14,7 @@ void serial_putc(char c, uint32_t x, uint32_t y)
     *(volatile unsigned long*)SERIAL_BASE = c;
 
     /* TODO */
+
 }
 
 struct display serial_display = {

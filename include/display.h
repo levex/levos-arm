@@ -7,7 +7,7 @@
 #define KERNEL_ERROR 1
 
 struct display {
-	void (*putc)(char c, uint32_t x, uint32_t y);
+	void (*putc)(char c);
 	uint8_t flags;
 	char *name;
 };
