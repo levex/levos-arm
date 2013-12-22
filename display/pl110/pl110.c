@@ -269,7 +269,7 @@ void pl110_put_pixel(uint32_t x, uint32_t y, uint32_t color)
 {
 	uint32_t index = x + y * 640;
 	if(color)
-		fb[index] = 0x1f << (5 + 6) | 0xf << 5;
+		fb[index] = 0x10 << (5 + 1) | 0xf << 5;
 }
 
 static int _x = 0;
@@ -305,7 +305,7 @@ void pl110_clear()
 
 struct display pl110_display = {
 	.putc = pl110_putc,
-	.flags = 1,
+	.flags = 2,
 	.name = "PL110 video display",
 };
 

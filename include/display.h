@@ -2,6 +2,7 @@
 #define __DISPLAY_H_
 
 #include <stdint.h>
+#include <stdarg.h>
 
 #define KERNEL_INFO 0
 #define KERNEL_ERROR 1
@@ -14,7 +15,7 @@ struct display {
 
 extern void display_register(struct display *d);
 
-extern void printk(char *str);
+extern void printk(char *str,  ...);
 
 
 extern void serial_init();
