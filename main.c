@@ -11,6 +11,7 @@ int main (void)
 	/* Setup pl110 video */
 	pl110_init();
 	pl110_clear();
+	printk("pl110 video initialized! :-)\n");
 	printk("kernel panic: reached end of main()!\n");
 	return 0;
 }

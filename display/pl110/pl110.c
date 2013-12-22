@@ -267,8 +267,9 @@ static unsigned char g_8x8_font[2048] =
 
 void pl110_put_pixel(uint32_t x, uint32_t y, uint32_t color)
 {
+	uint32_t index = x + y * 640;
 	if(color)
-		fb[y*480 + x] = 0x1f << (5 + 6) | 0xf << 5;
+		fb[index] = 0x1f << (5 + 6) | 0xf << 5;
 }
 
 static int _x = 0;
@@ -276,6 +277,11 @@ static int _y = 0;
 
 void pl110_putc(char c)
 {
+	if(c == '\n') {
+		_x = 0;
+		_y += 8;
+		return;	
+	}
 	int cx, cy;
 	int mask[8] = {1,2,4,8,16,32,64,128};
 	uint8_t *glyph = g_8x8_font + (int)c * 8;
@@ -283,6 +289,12 @@ void pl110_putc(char c)
 	for(cy = 0; cy < 8; cy ++)
 		for(cx = 0; cx < 8; cx ++)
 			pl110_put_pixel(_x+(8-cx), _y+cy, glyph[cy]&mask[cx]?1:0);
+
+	_x += 8;
+	if(_x > 640) {
+		_x = 0;
+		_y += 8;	
+	}
 }
 
 void pl110_clear()
@@ -306,8 +318,8 @@ void pl110_init()
 	pm->control = 0x1829;
 	fb = (uint16_t*)0x200000;
 
-	_x = 10;
-	_y = 10;
+	_x = 0;
+	_y = 0;
 
 	display_register(&pl110_display);
 }
